@@ -13,7 +13,7 @@
 
 .App {
   height: 100vh;
-  display:grid;
+  /* display:grid; */
   place-items: center;
   background: linear-gradient(to top, rgb(20,20,20),rgb(50,50,50))
 }
@@ -86,11 +86,23 @@
 }
 
 .buttonContainer div{
-  background-color: wheat;
+  /* background-color: wheat; */
   display: flex;
   justify-content: center;
 }
 
 #title {
   margin-top: 50px;
+}
+
+#bannerContainer {
+  height: 100px;
+  display: flex;
+  justify-content: end;
+}
+
+#banner {
+  height: 10px;
+  color: white;
+  
 }

@@ -2,6 +2,8 @@ import React, { useEffect } from 'react'
 import { useState, useRef} from 'react'
 import handleSubmit from '../handles/handlesubmit'
 import io from 'socket.io-client'
+import { setRef } from '@mui/material'
+import Banner from '../components/Banner'
 
 
 function Home() {
@@ -30,61 +32,84 @@ function Home() {
         dataRef.current.value = ""
     }
 
-    // const [videoFrame, setVideoFrame] = useState(null)
+////Functions to call motor API////
+    
+    const mouseDownLeft = async() => {
+        await fetch('/motor/left')
+    }
+    
+    const mouseDownRight = async() => {
+        await fetch('/motor/right')
+    }
+
+    const mouseDownUp = async() => {
+        await fetch('/motor/up')
+    }
+
+    const mouseDownDown = async() => {
+        await fetch('/motor/down')
+    }
+
+    ////CODE FOR HOLD AND TURN, NOT READY YET////
+    // const [buttonHeld, setButtonHeld] = useState(false)
+    
+    // const apiCall = async() => {
+    //     if (buttonHeld) {
+    //         console.log('button')
+    //         await fetch('/motor')
+    //     }
+    // }
 
     // useEffect(()=> {
-    //     const socket = io('http://192.168.68.121:5000')
-    //     socket.on('video_stream', (data) => {
-    //         const frameData = data.data
-    //         const frameUrl = 'data:image/jpeg;base64,' + frameData
-    //         setVideoFrame(frameUrl)
-    //     })
-
-    //     return () => {
-    //         socket.disconnect()
+    //     if (buttonHeld) {
+    //         const apiLoopInterval = setInterval(apiCall, 900)
+    //         return () => {
+    //             clearInterval(apiLoopInterval)
+    //         }
     //     }
-    // }, [])
-    const [buttonHeld, setButtonHeld] = useState(false)
+    // }, [buttonHeld])
 
+    // const mouseDown = () => {
+    //     console.log('mouse down')
+    //     setButtonHeld(true)
+    //     console.log(buttonHeld)
+    //     apiCall()
 
-    let startMotor = ()=> {
-        // await fetch('/motor')
-        setButtonHeld(true)
-        while (buttonHeld) {
-            // await fetch('/motor')
-            console.log('button held')
-        }
-    }
+    // }
 
-    let stopMotor = async ()=> {
-        // await fetch('/stopMotor')
-        setButtonHeld(false)
-        console.log('motor stopped')
-    }
+    // const mouseUp = () => {
+    //     setButtonHeld(false)
+    // }
 
   return (
     <div>
+      <div id='bannerContainer'>
+          {/* <h1>test</h1> */}
+          <Banner />
+      </div>
       <div id='camera'></div>
-        <button onClick={getData}>Click Me</button>
+        
+        {/* <button onClick={getData}>Click Me</button>
         <button onClick={getState}>Toggle Visibility</button>
         {state && <h1>{data.context}</h1>}
         <form onSubmit={submithandler}>
             <input type='text' ref={dataRef}/>
             <button type='submit'>Save</button>
-        </form>
+        </form> */}
         <div id='videoContainer'>
             <img id='videoFeed' src='/video_feed' alt='Video Frame'/>
         </div>
+
         <div className='buttonContainer'>
             <div>
-                <button>Up</button>
+                <button onMouseDown={mouseDownUp}>Up</button>
             </div>
             <div>
-                <button onMouseDown={startMotor} onMouseUp={stopMotor} onMouseLeave={stopMotor}>Left</button>
-                <button>Right</button>
+                <button onMouseDown={mouseDownLeft}>Left</button>
+                <button onMouseDown={mouseDownRight}>Right</button>
             </div>
             <div>
-                <button>Down</button>
+                <button onMouseDown={mouseDownDown}>Down</button>
             </div>
         </div>
         <button>Turn Off</button>
